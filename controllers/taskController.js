@@ -29,8 +29,8 @@ const updateTaskStatus = async (req, res) => {
         return res.status(400).json({ error: 'El estado completed debe ser booleano' });
     }
     try {
-        const task = await taskModel.updateTaskStatus(id, completed);
-        res.json(task);
+        const task = await taskModel.updateTaskStatus(Number(id), completed);
+        res.status(200).json(task);
     } catch (err) {
         res.status(404).json({ error: err.message });
     }
@@ -39,7 +39,7 @@ const updateTaskStatus = async (req, res) => {
 const deleteTask = async (req, res) => {
     const { id } = req.params;
     try {
-        await taskModel.deleteTask(id);
+        await taskModel.deleteTask(Number(id));
         res.status(200).send();
     } catch (err) {
         res.status(404).json({ error: err.message });

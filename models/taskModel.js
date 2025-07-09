@@ -1,5 +1,3 @@
-
-
 let tasks = [];
 
 export const getAllTasks = () => Promise.resolve(tasks);
@@ -32,6 +30,6 @@ export const getSummary = () => {
     const total = tasks.length;
     const completed = tasks.filter(t => t.completed).length;
     const pending = tasks.filter(t => !t.completed);
-    const avgPriority = pending.length ? (pending.reduce((sum, t) => sum + t.priority, 0) / pending.length) : 0;
-    return Promise.resolve({ total, completed, avgPriority });
+    const averagePriority = pending.length ? (pending.reduce((sum, t) => sum + t.priority, 0) / pending.length) : 0;
+    return Promise.resolve({ total, completed, averagePriority });
 };

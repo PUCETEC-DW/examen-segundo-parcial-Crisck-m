@@ -1,5 +1,4 @@
-
-const taskModel = require('./taskModel');
+const taskModel = require('../models/taskModel');
 
 const getAllTasks = async (req, res) => {
     const tasks = await taskModel.getAllTasks();
@@ -7,8 +6,9 @@ const getAllTasks = async (req, res) => {
 };
 
 const createTask = async (req, res) => {
-    const { id, title, description, completed, priority } = req.body;
-    if (!id || !title || !description || typeof completed !== 'boolean' || typeof priority !== 'number') {
+    let { id, title, description, completed, priority } = req.body;
+    if (completed === undefined) completed = false;
+    if (!id || !title || !description || typeof priority !== 'number') {
         return res.status(400).json({ error: 'Datos incompletos o inválidos' });
     }
     if (priority < 1 || priority > 5) {
@@ -40,7 +40,7 @@ const deleteTask = async (req, res) => {
     const { id } = req.params;
     try {
         await taskModel.deleteTask(id);
-        res.status(204).send();
+        res.status(200).send();
     } catch (err) {
         res.status(404).json({ error: err.message });
     }
